@@ -32,12 +32,19 @@
             </form>
         </section>
 
-        <section class="mt-[16px] flex gap-2 justify-between">
-            <button type="button"
-                class="bg-orange-600 rounded text-white p-[8px] hover:bg-orange-700 transition duration-150">Filter</button>
+        <section class="mt-[16px] flex gap-2 justify-between items-center">
+
+            <select id="filter-select" onchange="filterTodo(this.value)"
+                class="bg-slate-700 border border-slate-600 text-white text-sm rounded p-[8px]">
+                <option value="all">Semua Tugas</option>
+                <option value="pending">Pending</option>
+                <option value="completed">Selesai</option>
+            </select>
+
             <button type="button" onclick="deleteAllTodo()"
-                class="bg-red-400 rounded text-white p-[8px] hover:bg-red-500 transition duration-150">Clear
-                All</button>
+                class="bg-red-400 rounded text-white p-[8px] hover:bg-red-500 transition duration-150">
+                Clear All
+            </button>
         </section>
 
 
