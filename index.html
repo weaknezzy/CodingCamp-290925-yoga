@@ -6,52 +6,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo-Yoga</title>
 
-    <!-- Link CSS External -->
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- Link Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 </head>
 
-<body class="bg-gray-100">
-    <!-- Header -->
-    <header>
-        <h1 class="text-3xl font-bold">Yoga Todo App</h1>
-    </header>
+<body class="bg-slate-800">
 
-    <!-- Main Content -->
-    <main>
-        <!-- Form Tools -->
+    <main class="border-2 border-orange-400 bg-slate-700 text-slate-100 max-w-lg mx-auto p-6 rounded shadow mt-10">
+        <header>
+            <h1 class="text-3xl font-bold text-center mb-5">Yoga Todo App</h1>
+        </header>
         <section>
-            <form id="todo-form">
-                <input type="text" class="border rounded p-[8px]" id="todo-input" placeholder="Enter your todo...">
-                <input type="date" class="border rounded p-[8px]" id="todo-date">
-                <button type="button" onclick="addTodo()" class="bg-blue-500 rounded text-white p-[8px]" type="submit">Add Todo</button>
+            <form id="todo-form" class="flex items-center gap-2">
+                <input type="text"
+                    class="border rounded p-[8px] border-gray-500 outline-none focus:border-orange-600 focus:ring-orange-600 focus:ring-2 transition duration-300 flex-grow bg-slate-800 text-slate-200"
+                    id="todo-input" placeholder="Enter your todo...">
+                <input type="date"
+                    class="border rounded p-[8px] border-gray-500 outline-none focus:border-orange-600 focus:ring-orange-600 focus:ring-2 transition duration-300 flex-shrink-0 bg-slate-800 text-slate-200"
+                    id="todo-date">
+                <button type="button" onclick="addTodo()"
+                    class="bg-orange-600 rounded text-white p-2 font-bold w-10 h-10 flex-shrink-0 hover:bg-orange-700 transition duration-150"
+                    type="submit">+</button>
             </form>
         </section>
 
-        <!-- Action Button -->
-        <section class="mt-[16px] flex gap-2">
-            <button type="button" onclick="deleteAllTodo()" class="bg-red-500 rounded text-white p-[8px]">Clear All</button>
-            <button class="bg-green-500 rounded text-white p-[8px]">Filter</button>
+        <section class="mt-[16px] flex gap-2 justify-between">
+            <button type="button"
+                class="bg-orange-600 rounded text-white p-[8px] hover:bg-orange-700 transition duration-150">Filter</button>
+            <button type="button" onclick="deleteAllTodo()"
+                class="bg-red-400 rounded text-white p-[8px] hover:bg-red-500 transition duration-150">Clear
+                All</button>
         </section>
 
 
-        <!-- List Todo -->
         <section class="mt-[16px]">
-            <ul id="todo-list" class="mt-4">
-                <!-- Todo Items will be appended here -->
-                <p class="text-center text-gray-500">Tidak ada tugas. Tambahkan Tugas</p>
-            </ul>
+            <table id="todo-table" class="min-w-full divide-y divide-gray-600">
+                <thead>
+                    <tr class="bg-slate-800">
+                        <th id="kolom-task" name="kolom-task"
+                            class="px-3 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
+                            Task
+                        </th>
+                        <th id="kolom-date" name="kolom-date"
+                            class="px-3 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
+                            Date
+                        </th>
+                        <th id="kolom-status" name="kolom-status"
+                            class="px-3 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
+                            Status
+                        </th>
+                        <th id="kolom-aksi" name="kolom-aksi"
+                            class="px-3 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider">
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody id="todo-list-body" class="bg-slate-700 divide-y divide-gray-600">
+                    <tr id="empty-message">
+                        <td colspan="4" class="px-3 py-4 text-center text-sm text-slate-400 italic">
+                            No task found
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
     </main>
-    <!-- Footer -->
     <footer>
-        <p>&copy; 2025 Yoga Todo App</p>
+        <p class="text-center mt-5 text-slate-400">&copy; 2025 Yoga Todo App</p>
     </footer>
 
-    <!-- Link JS External -->
     <script src="js/script.js"></script>
 </body>
 
