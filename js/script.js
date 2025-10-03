@@ -79,6 +79,26 @@ function deleteAllTodo() {
     renderTodo();
 }
 
+function deleteTodo(index) {
+    // 1. Validasi index
+    if (index === undefined || index < 0 || index >= todos.length) {
+        console.error("Index tugas tidak valid.");
+        return; 
+    }
+
+    // 2. Hapus tugas dari array 'todos'
+    // Metode splice(index, 1) menghapus 1 elemen mulai dari posisi 'index'
+    todos.splice(index, 1);
+    
+    console.log(`Tugas pada index ${index} berhasil dihapus.`);
+
+    // 3. Simpan array yang diperbarui ke Local Storage
+    localStorage.setItem('todos', JSON.stringify(todos));
+
+    // 4. Render ulang tabel
+    renderTodo();
+}
+
 function editTodo(index) {
     //Dapatkan data tugas yang akan diedit
     const todoToEdit = todos[index]
