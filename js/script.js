@@ -1,17 +1,15 @@
 //array untuk menampung todo
 let todos = [];
-function addTodo() { 
 
+function addTodo() { 
     //mendapatkan value dari form
     const todoInput = document.getElementById("todo-input");
     const todoDate = document.getElementById("todo-date");
     const todoListBody = document.getElementById('todo-list-body');
     
-
-
     //validasi input
     if (validateInput (todoInput.value, todoDate.value)) {
-        let todo = {nama: todoInput.value, tanggal: todoDate.value};
+        let todo = {nama: todoInput.value, tanggal: todoDate.value, status: 'pending'};
         todos.push(todo);
         console.log(todos);
 
@@ -28,12 +26,30 @@ function renderTodo() {
 
     //mengosongkan todo-list
     todoList.innerHTML = "";
-    
+
     //menambahkan todo ke table
     todos.forEach((todo,index) => {
+
+    // TENTUKAN WARNA DAN TEKS BERDASARKAN STATUS
+    let statusText;
+    let statusClass;
+        
+    if (todo.status === 'completed') {
+        statusText = 'Selesai';
+        statusClass = 'bg-green-600'; // Warna hijau untuk selesai
+    } else {
+        statusText = 'Pending';
+        statusClass = 'bg-yellow-600'; // Warna kuning untuk pending
+    }
+
+    // TENTUKAN LABEL TOMBOL
+    const buttonText = todo.status === 'completed' ? 'Batalkan' : 'Selesaikan';
+    const buttonClass = todo.status === 'completed' ? 'bg-orange-500 hover:bg-orange-600' : 'bg-green-500 hover:bg-green-600';
+    const textDecorationClass = todo.status === 'completed' ? 'line-through text-slate-400' : '';
+
         todoList.innerHTML += `<tr id="todo-baris-${index}" class="hover:bg-slate-600 transition duration-150 ">
             
-            <td class="px-3 py-4 whitespace-nowrap font-medium text-slate-200">
+            <td class="px-3 py-4 whitespace-nowrap font-medium text-slate-200 ${textDecorationClass}">
                 ${todo.nama}
             </td>
             
@@ -42,8 +58,8 @@ function renderTodo() {
             </td>
             
             <td class="px-3 py-4 whitespace-nowrap">
-                <span class="bg-yellow-600 text-white text-xs font-bold px-2 py-1 rounded-full">
-                    Pending 
+                <span class="${statusClass} text-white text-xs font-bold px-2 py-1 rounded-full">
+                    ${statusText} 
                 </span>
             </td>
             
@@ -62,9 +78,9 @@ function renderTodo() {
                 </button>
                  <button 
                     type="button" 
-                    onclick="toogleStatus(${index})" 
-                    class="bg-green-500 hover:bg-green-600 transition duration-150 rounded text-white text-xs px-2 py-1">
-                    Selesaikan
+                    onclick="toggleStatus(${index})" 
+                    class="${buttonClass} hover:bg-green-600 transition duration-150 rounded text-white text-xs px-2 py-1">
+                    ${buttonText}
                 </button>
             </td>
         </tr>
@@ -144,6 +160,26 @@ function editTodo(index) {
         </td>
     `;
     return;
+}
+
+function toggleStatus(index) {
+    // 1. Dapatkan tugas berdasarkan index
+    const todo = todos[index];
+
+    // 2. Ubah statusnya: 'pending' menjadi 'completed', atau sebaliknya
+    if (todo.status === 'pending') {
+        todo.status = 'completed';
+    } else {
+        todo.status = 'pending';
+    }
+
+    console.log(`Status tugas pada index ${index} diubah menjadi: ${todo.status}`);
+
+    // 3. Simpan array yang diperbarui ke Local Storage
+    localStorage.setItem('todos', JSON.stringify(todos));
+
+    // 4. Render ulang tabel
+    renderTodo();
 }
 
 function saveEdit(index) {
