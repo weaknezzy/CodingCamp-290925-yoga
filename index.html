@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo-Yoga</title>
+
+    <!-- Link CSS External -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Link Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header>
+        <h1 class="text-3xl font-bold">Yoga Todo App</h1>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Form Tools -->
+        <section>
+            <form id="todo-form">
+                <input type="text" class="border rounded p-[8px]" id="todo-input" placeholder="Enter your todo...">
+                <input type="date" class="border rounded p-[8px]" id="todo-date">
+                <button type="button" onclick="addTodo()" class="bg-blue-500 rounded text-white p-[8px]" type="submit">Add Todo</button>
+            </form>
+        </section>
+
+        <!-- Action Button -->
+        <section class="mt-[16px] flex gap-2">
+            <button type="button" onclick="deleteAllTodo()" class="bg-red-500 rounded text-white p-[8px]">Clear All</button>
+            <button class="bg-green-500 rounded text-white p-[8px]">Filter</button>
+        </section>
+
+
+        <!-- List Todo -->
+        <section class="mt-[16px]">
+            <ul id="todo-list" class="mt-4">
+                <!-- Todo Items will be appended here -->
+                <p class="text-center text-gray-500">Tidak ada tugas. Tambahkan Tugas</p>
+            </ul>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Yoga Todo App</p>
+    </footer>
+
+    <!-- Link JS External -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>
