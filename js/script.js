@@ -6,6 +6,7 @@ function addTodo() {
     const todoInput = document.getElementById("todo-input");
     const todoDate = document.getElementById("todo-date");
     const todoListBody = document.getElementById('todo-list-body');
+    
 
 
     //validasi input
@@ -30,7 +31,7 @@ function renderTodo() {
     
     //menambahkan todo ke table
     todos.forEach((todo,index) => {
-        todoList.innerHTML += `<tr class="hover:bg-slate-600 transition duration-150 ">
+        todoList.innerHTML += `<tr id="todo-baris-${index}" class="hover:bg-slate-600 transition duration-150 ">
             
             <td class="px-3 py-4 whitespace-nowrap font-medium text-slate-200">
                 ${todo.nama}
@@ -55,13 +56,13 @@ function renderTodo() {
                 </button>
                 <button 
                     type="button" 
-                    onclick="deleteTodo(${index})" 
+                    onclick="editTodo(${index})" 
                     class="bg-yellow-500 hover:bg-yellow-600 transition duration-150 rounded text-white text-xs px-2 py-1">
                     Edit
                 </button>
                  <button 
                     type="button" 
-                    onclick="deleteTodo(${index})" 
+                    onclick="toogleStatus(${index})" 
                     class="bg-green-500 hover:bg-green-600 transition duration-150 rounded text-white text-xs px-2 py-1">
                     Selesaikan
                 </button>
@@ -75,6 +76,75 @@ function renderTodo() {
 function deleteAllTodo() { 
     todos = [];
     
+    renderTodo();
+}
+
+function editTodo(index) {
+    //Dapatkan data tugas yang akan diedit
+    const todoToEdit = todos[index]
+
+    //Dapatkan elemen baris TR yang akan diubah
+    const row = document.getElementById(`todo-baris-${index}`);
+
+    //Periksa apakah baris ditemukan
+    if (!row) return;
+
+    //Ubah konten baris menjadi mode edit
+
+    row.innerHTML = `
+      <td class="px-3 py-4">
+            <input type="text" id="edit-nama-${index}" 
+                   value="${todoToEdit.nama}" 
+                   class="bg-slate-800 border border-orange-400 text-slate-200 rounded p-1 w-full">
+        </td>
+        
+        <td class="px-3 py-4">
+            <input type="date" id="edit-tanggal-${index}" 
+                   value="${todoToEdit.tanggal}" 
+                   class="bg-slate-800 border border-orange-400 text-slate-200 rounded p-1 w-full">
+        </td>
+        
+        <td class="px-3 py-4">
+            <span class="text-sm text-slate-400">Editing...</span>
+        </td>
+        
+        <td class="px-3 py-4 whitespace-nowrap">
+            <button 
+                type="button" 
+                onclick="saveEdit(${index})" 
+                class="bg-green-600 hover:bg-green-700 transition duration-150 rounded text-white text-xs px-2 py-1">
+                Save
+            </button>
+            <button 
+                type="button" 
+                onclick="renderTodo()" // Kembali ke tampilan normal tanpa menyimpan
+                class="bg-gray-500 hover:bg-gray-600 transition duration-150 rounded text-white text-xs px-2 py-1">
+                Cancel
+            </button>
+        </td>
+    `;
+    return;
+}
+
+function saveEdit(index) {
+    // 1. Dapatkan nilai baru dari input form
+    const newNama = document.getElementById(`edit-nama-${index}`).value;
+    const newTanggal = document.getElementById(`edit-tanggal-${index}`).value;
+
+    // 2. Validasi sederhana
+    if (!newNama.trim() || !newTanggal) {
+        alert("Nama tugas dan tanggal tidak boleh kosong.");
+        return;
+    }
+
+    // 3. Perbarui array todos
+    todos[index].nama = newNama;
+    todos[index].tanggal = newTanggal;
+
+    // 4. Simpan ke Local Storage
+    localStorage.setItem('todos', JSON.stringify(todos));
+
+    // 5. Render ulang tabel untuk menampilkan hasil edit
     renderTodo();
 }
 
